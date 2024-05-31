@@ -7,15 +7,8 @@ export const data = new SlashCommandBuilder()
 
 export async function execute(interaction: CommandInteraction) {
     try {
-        const loadingMessage = await interaction.reply('Loading...');
+        interaction.deferReply();
 
-        const progressIcons = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
-        let progressIndex = 0;
-
-        const progressInterval = setInterval(() => {
-            loadingMessage.edit(`Loading... ${progressIcons[progressIndex]}`);
-            progressIndex = (progressIndex + 1) % progressIcons.length;
-        }, 200);
 
         const speedtest = new FastSpeedtest({
             token: "YXNkZmFzZGxmbnNkYWZoYXNkZmhrYWxm", // required
@@ -27,8 +20,8 @@ export async function execute(interaction: CommandInteraction) {
             unit: FastSpeedtest.UNITS.Mbps // default: Bps
         });
 
+
         speedtest.getSpeed().then((s: any) => {
-            clearInterval(progressInterval);
             const downloadSpeed = Math.floor(s);
             const embed = new EmbedBuilder()
                 .setTitle('Speedtest Results')
@@ -37,13 +30,10 @@ export async function execute(interaction: CommandInteraction) {
                 ])
                 .setColor('#00FF00');
 
-            loadingMessage.delete(); // Remove the loading message
-
-            interaction.reply({ embeds: [embed], components: [] });
+            interaction.followUp({ embeds: [embed], components: [] });
         }).catch((e: any) => {
-            clearInterval(progressInterval);
             console.error(e);
-            loadingMessage.edit('An error occurred while running the speedtest.');
+            interaction.editReply('An error occurred while running the speedtest.');
         });
     } catch (error) {
         console.error(error);
