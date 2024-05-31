@@ -1,7 +1,7 @@
 import { Client, GatewayIntentBits, ActivityType } from "discord.js";
 import { config } from "./config";
 import { commands } from "./commands";
-import { deployCommands } from "./deploy-commands";
+import { deployCommands, deployGlobalCommands } from "./deploy-commands";
 
 const client = new Client({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.DirectMessages],
@@ -16,6 +16,10 @@ client.once("ready", () => {
 
 client.on("guildCreate", async (guild) => {
     await deployCommands({ guildId: guild.id });
+});
+
+client.on("ready", async () => {
+    await deployGlobalCommands();
 });
 
 client.on("interactionCreate", async (interaction) => {
