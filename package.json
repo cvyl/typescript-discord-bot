@@ -1,20 +1,19 @@
 {
-  "name": "tyso_bot",
+  "name": "discord-bot-ts",
   "version": "0.0.1",
   "description": "TypeScript Discord Bot using DiscordJS",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/config.ts",
+    "dev": "tsx watch src/index.ts",
     "start": "node dist/index.js",
     "build": "tsup src/* --minify",
     "test": "npm run build && npm run start"
   },
   "keywords": [
     "discord",
-    "discord-bot",
-    "tyso-bot"
+    "discord-bot"
   ],
-  "author": "ly-nld",
+  "author": "cvyl",
   "license": "ISC",
   "dependencies": {
     "discord.js": "^14.14.1",
