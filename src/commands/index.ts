@@ -1,9 +1,9 @@
 import * as ping from "./ping";
-import * as list_commands from "./list_commands";
+import * as replyMe from "./replyMe";
 import * as speedtest from "./speedtest";
 
 export const commands = {
     ping,
-    list_commands,
+    replyMe,
     speedtest,
 };
