@@ -26,3 +26,20 @@ export async function deployCommands({ guildId }: DeployCommandsProps) {
         console.error(error);
     }
 }
+
+export async function deployGlobalCommands() {
+    try {
+        console.log("Started refreshing global application (/) commands.");
+
+        await rest.put(
+            Routes.applicationCommands(config.DISCORD_CLIENT_ID),
+            {
+                body: commandsData,
+            }
+        );
+
+        console.log("Successfully reloaded global application (/) commands.");
+    } catch (error) {
+        console.error(error);
+    }
+}
